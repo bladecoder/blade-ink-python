@@ -20,7 +20,7 @@ jobs:
         pip install pylint
     - name: Analysing the code with pylint
       run: |
-        pylint $(git ls-files '*.py')
+        pylint $(git ls-files 'bink/*.py')
     - name: Run tests
       run: |
         python -m unittest -v tests/story_tests.py

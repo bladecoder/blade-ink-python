@@ -11,8 +11,8 @@ To learn more about the Ink language, you can check [the official documentation]
 Here is a quick example that uses basic features to play an Ink story using the `bladeink` crate.
 
 ```python
-# Story is the entry point of the `bladeink` lib.
-story = Story.from_file("inkfiles/TheIntercept.ink.json")
+# Story is the entry point of the Blade Ink lib.
+story = story_from_file("inkfiles/TheIntercept.ink.json")
 self.assertTrue(story.can_continue())
 
 end = False

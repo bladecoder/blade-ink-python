@@ -1,14 +1,15 @@
-from bink import Story
+from bink.story import Story, story_from_file
 import unittest
+
 
 class StoryTestCase(unittest.TestCase):
     def test_oneline(self):
-        story = Story.from_file("inkfiles/oneline.ink.json")
+        story = story_from_file("inkfiles/oneline.ink.json")
         self.assertTrue(story.can_continue())
         self.assertEqual(story.cont(), "Line.\n")
 
     def test_the_intercept(self):
-        story = Story.from_file("inkfiles/TheIntercept.ink.json")
+        story = story_from_file("inkfiles/TheIntercept.ink.json")
         self.assertTrue(story.can_continue())
 
         end = False
@@ -34,6 +35,7 @@ class StoryTestCase(unittest.TestCase):
                 end = True
 
         print("Story ended ok.")
+
 
 if __name__ == '__main__':
     unittest.main()
