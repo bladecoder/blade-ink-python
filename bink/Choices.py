@@ -1,7 +1,7 @@
 # pylint: disable=E1101
 """Handle Ink Choices."""
 import ctypes
-from bink.loadlib import LIB, BINK_OK
+from bink import LIB, BINK_OK
 
 class Choices:
     """List of story choices."""

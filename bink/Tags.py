@@ -2,7 +2,7 @@
 
 """Handle Ink tags."""
 import ctypes
-from bink.loadlib import LIB, BINK_OK
+from bink import LIB, BINK_OK
 
 class Tags:
     """Contains a list of tags."""

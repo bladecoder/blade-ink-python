@@ -4,7 +4,7 @@
 import ctypes
 from bink.choices import Choices
 from bink.tags import Tags
-from bink.loadlib import LIB, BINK_OK
+from bink import LIB, BINK_OK
 
 class Story:
     """Story is the entry point of the Blade Ink lib."""
