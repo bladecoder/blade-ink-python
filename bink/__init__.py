@@ -31,7 +31,7 @@ def _load_library():
                 _filename = library_name
 
     try:
-        print("lib filename: ", _filename)
+        #print("lib filename: ", _filename)
         lib = ctypes.CDLL(_filename)
     except (OSError, TypeError) as exc:
         lib = None
