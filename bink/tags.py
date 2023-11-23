@@ -1,4 +1,4 @@
-# pylint: disable=E1101
+# pylint: disable=E1101, R0903
 
 """Handle Ink tags."""
 import ctypes
@@ -6,6 +6,7 @@ from bink import LIB, BINK_OK
 
 
 class TagsIterator:
+    """Iterator for tags."""
     def __init__(self, tags):
         self._tags = tags
         self._index = 0

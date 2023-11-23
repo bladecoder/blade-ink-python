@@ -1,10 +1,11 @@
-# pylint: disable=E1101
+# pylint: disable=E1101, R0903
 """Handle Ink Choices."""
 import ctypes
 from bink import LIB, BINK_OK
 
 
 class ChoicesIterator:
+    """Iterator for choices."""
     def __init__(self, choices):
         self._choices = choices
         self._index = 0
