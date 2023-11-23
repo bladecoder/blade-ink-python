@@ -15,13 +15,11 @@ class StoryTestCase(unittest.TestCase):
         end = False
 
         while not end:
-            while story.can_continue():
-                line = story.cont()
+            for line in story:
                 print(line)  # Assuming 'line' is a byte-like object
 
             # Obtain and print choices
-            choices = story.get_current_choices()
-
+            choices = story.choices
             print(f"Num. choices: {len(choices)}\n")
 
             if choices:
