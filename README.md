@@ -14,6 +14,8 @@ From PyPI: `pip install bink`. This will install the library with a bundled Blad
 Here is a quick example that uses basic features to play an Ink story using the Blade Ink.
 
 ```python
+from bink.story import Story, story_from_file
+
 # Story is the entry point of the Blade Ink lib.
 story = story_from_file("inkfiles/TheIntercept.ink.json")
 self.assertTrue(story.can_continue())
