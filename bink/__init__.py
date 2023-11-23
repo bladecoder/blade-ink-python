@@ -14,7 +14,12 @@ def _load_library():
     else:
         library_name = 'libbink.so'
 
-    _filename = os.path.join(os.path.dirname(__file__), 'native/' + library_name)
+    arch = "x86_64/"
+
+    if platform.machine() == "arm64":
+        arch = "arm64/"
+
+    _filename = os.path.join(os.path.dirname(__file__), 'native/' + arch + library_name)
 
     # If no bundled shared object is found, look for a system-wide installed one.
     if not os.path.exists(_filename):
