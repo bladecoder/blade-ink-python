@@ -30,10 +30,10 @@ while not end:
     # Obtain and print choices
     choices = story.get_current_choices()
 
-    print(f"Num. choices: {choices.len()}\n")
+    print(f"Num. choices: {len(choices)}\n")
 
-    if choices.len() != 0:
-        for i in range(choices.len()):
+    if len(choices) != 0:
+        for i in range(len(choices)):
             text = choices.get_text(i)
             print(f"{i + 1}. {text}")
 

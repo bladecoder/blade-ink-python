@@ -9,7 +9,7 @@ class Choices:
         self._choices = choices
         self._len = c_len
 
-    def len(self) -> int:
+    def __len__(self) -> int:
         """Returns the number of choices."""
         return self._len
 

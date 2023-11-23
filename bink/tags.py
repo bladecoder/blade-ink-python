@@ -10,7 +10,7 @@ class Tags:
         self._tags = tags
         self._len = c_len
 
-    def len(self) -> int:
+    def __len__(self) -> int:
         """Returns the number of choices."""
         return self._len
 
