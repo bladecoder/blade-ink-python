@@ -6,9 +6,12 @@ Blade Ink Python provides bindings for the Inkle's [Ink](https://github.com/inkl
 
 To learn more about the Ink language, you can check [the official documentation](https://github.com/inkle/ink/blob/master/Documentation/WritingWithInk.md).
 
-## Using the bladeink library crate
+## Installation
+From PyPI: `pip install bink`. This will install the library with a bundled Blade Ink binary, so you're ready to go on Windows, macOS and Linux.
 
-Here is a quick example that uses basic features to play an Ink story using the `bladeink` crate.
+## Using the Blade Ink library
+
+Here is a quick example that uses basic features to play an Ink story using the Blade Ink.
 
 ```python
 # Story is the entry point of the Blade Ink lib.
