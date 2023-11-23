@@ -24,4 +24,4 @@ jobs:
         pylint $(git ls-files 'bink/*.py')
     - name: Run tests
       run: |
-        python -m unittest -v tests/story_tests.py
+        python -m unittest discover

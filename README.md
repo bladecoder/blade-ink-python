@@ -53,6 +53,6 @@ print("Story ended ok.")
 We can execute Python tests in the `tests` folder using the next command:
 
 ```bash
-$  python -m unittest -v tests/story_tests.py 
+$  python -m unittest discover
 ```
 
