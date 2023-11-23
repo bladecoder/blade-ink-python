@@ -25,9 +25,9 @@ class StoryTestCase(unittest.TestCase):
             if choices:
                 for i, text in enumerate(choices):
                     print(f"{i + 1}. {text}")
-
+                    
                 # Always choose the first option
-                ret = story.choose_choice_index(0)
+                story.choose_choice_index(0)
             else:
                 end = True
 
