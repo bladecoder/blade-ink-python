@@ -33,6 +33,12 @@ def get_package_data():
         else:
             raise RuntimeError('Unsupported platform: ' + plat_name)
         
+        arch = "x86_64/"
+        if "arm64" in plat_name or "aarch64" in plat_name:
+            arch = "arm64/"
+
+        lib = arch + lib
+        
         return ['native/' + lib]
 
     # if it is not present, return ['native/*']
@@ -45,7 +51,7 @@ description = open(
 setup(
     name='bink',
     packages=find_packages(exclude=['tests']),
-    version='0.1.0',
+    version='0.2.0',
     description='Runtime for Ink, a scripting language for writing interactive narrative',
     long_description_content_type='text/x-rst',
     long_description=description,
