@@ -22,11 +22,10 @@ class StoryTestCase(unittest.TestCase):
             # Obtain and print choices
             choices = story.get_current_choices()
 
-            print(f"Num. choices: {choices.len()}\n")
+            print(f"Num. choices: {len(choices)}\n")
 
-            if choices.len() != 0:
-                for i in range(choices.len()):
-                    text = choices.get_text(i)
+            if choices:
+                for i, text in enumerate(choices):
                     print(f"{i + 1}. {text}")
 
                 # Always choose the first option
