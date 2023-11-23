@@ -15,22 +15,19 @@ class StoryTestCase(unittest.TestCase):
         end = False
 
         while not end:
-            while story.can_continue():
-                line = story.cont()
+            for line in story:
                 print(line)  # Assuming 'line' is a byte-like object
 
             # Obtain and print choices
-            choices = story.get_current_choices()
-
+            choices = story.choices
             print(f"Num. choices: {len(choices)}\n")
 
-            if len(choices) != 0:
-                for i in range(len(choices)):
-                    text = choices.get_text(i)
+            if choices:
+                for i, text in enumerate(choices):
                     print(f"{i + 1}. {text}")
-
+                    
                 # Always choose the first option
-                ret = story.choose_choice_index(0)
+                story.choose_choice_index(0)
             else:
                 end = True
 

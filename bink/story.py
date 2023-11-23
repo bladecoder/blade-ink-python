@@ -6,6 +6,7 @@ from bink.choices import Choices
 from bink.tags import Tags
 from bink import LIB, BINK_OK
 
+
 class Story:
     """Story is the entry point of the Blade Ink lib."""
     def __init__(self, story_string: str):
@@ -21,6 +22,23 @@ class Story:
             raise RuntimeError(err)
 
         self._story = story
+
+    def __next__(self):
+        if not self.can_continue():
+            raise StopIteration
+
+        return self.cont()
+
+    def __iter__(self):
+        return self
+
+    @property
+    def choices(self):
+        return self.get_current_choices()
+
+    @property
+    def tags(self):
+        return self.get_current_tags()
 
     def can_continue(self):
         can_continue = ctypes.c_bool()

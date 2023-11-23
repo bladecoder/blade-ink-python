@@ -32,9 +32,8 @@ while not end:
 
     print(f"Num. choices: {len(choices)}\n")
 
-    if len(choices) != 0:
-        for i in range(len(choices)):
-            text = choices.get_text(i)
+    if choices:
+        for i, text in enumerate(choices):
             print(f"{i + 1}. {text}")
 
         # read_input() is a method that you should implement
@@ -53,6 +52,6 @@ print("Story ended ok.")
 We can execute Python tests in the `tests` folder using the next command:
 
 ```bash
-$  python -m unittest -v tests/story_tests.py 
+$  python -m unittest discover
 ```
 
