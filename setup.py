@@ -14,6 +14,7 @@ class BdistWheel(bdist_wheel):
         return ('py3', 'none') + bdist_wheel.get_tag(self)[2:]
 
 def get_package_data():
+    plat_name_idx = None
     # find --plat-name argument idx and get the next argument
     for i, arg in enumerate(sys.argv):
         if arg == '--plat-name':
