@@ -51,7 +51,7 @@ description = open(
 setup(
     name='bink',
     packages=find_packages(exclude=['tests']),
-    version='0.2.0',
+    version='0.3.0',
     description='Runtime for Ink, a scripting language for writing interactive narrative',
     long_description_content_type='text/x-rst',
     long_description=description,
