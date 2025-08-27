@@ -21,7 +21,7 @@ class TagsIterator:
 
 class Tags:
     """Contains a list of tags."""
-    def __init__(self, tags, c_len):
+    def __init__(self, tags, c_len: int):
         self._tags = tags
         self._len = c_len
 
@@ -41,7 +41,7 @@ class Tags:
         if not isinstance(idx, int):
             raise TypeError
 
-        if idx < 0 or idx > self._len:
+        if idx < 0 or idx >= self._len:
             raise IndexError
 
         return self.get(idx)
@@ -49,7 +49,7 @@ class Tags:
     def get(self, idx) -> str:
         """Returns the tag text."""
         tag = ctypes.c_char_p()
-        ret = LIB.bink_choices_get_text(self._tags, idx, ctypes.byref(tag))
+        ret = LIB.bink_tags_get(self._tags, idx, ctypes.byref(tag))
 
         if ret != BINK_OK:
             raise RuntimeError("Error getting tag, index out of bounds?")
@@ -60,4 +60,4 @@ class Tags:
         return result
 
     def __del__(self):
-        LIB.bink_choices_free(self._tags)
+        LIB.bink_tags_free(self._tags)

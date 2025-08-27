@@ -40,7 +40,7 @@ class Choices:
         if not isinstance(idx, int):
             raise TypeError
 
-        if idx < 0 or idx > self._len:
+        if idx < 0 or idx >= self._len:
             raise IndexError
 
         return self.get_text(idx)

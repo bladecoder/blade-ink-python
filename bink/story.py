@@ -127,9 +127,8 @@ class Story:
 
     def choose_path_string(self, path: str):
         err_msg = ctypes.c_char_p()
-        story = ctypes.c_void_p()
-        ret = LIB.bink_story_new(
-            ctypes.byref(story),
+        ret = LIB.bink_story_choose_path_string(
+            self._story,
             path.encode('utf-8'),
             ctypes.byref(err_msg))
         if ret != BINK_OK:
