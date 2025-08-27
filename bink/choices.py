@@ -40,7 +40,13 @@ class Choices:
         if not isinstance(idx, int):
             raise TypeError
 
-        if idx < 0 or idx > self._len:
+        # The index is 0-based; valid values range from 0 to ``self._len - 1``.
+        # The previous check allowed ``idx == self._len`` which would defer the
+        # bounds validation to the underlying C library, resulting in a
+        # ``RuntimeError`` instead of the expected ``IndexError``. Ensure the
+        # upper bound is exclusive so out-of-range access raises ``IndexError``
+        # consistently.
+        if idx < 0 or idx >= self._len:
             raise IndexError
 
         return self.get_text(idx)
