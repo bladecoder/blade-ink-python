@@ -12,6 +12,8 @@ fi
 mkdir -p build
 cd build
 
+echo "Downloading Version $VERSION..."
+
 curl -kOL https://github.com/bladecoder/blade-ink-ffi/releases/download/${VERSION}/libbink-${VERSION}-aarch64-apple-darwin.tar.gz
 curl -kOL https://github.com/bladecoder/blade-ink-ffi/releases/download/${VERSION}/libbink-${VERSION}-aarch64-unknown-linux-gnu.tar.gz
 curl -kOL https://github.com/bladecoder/blade-ink-ffi/releases/download/${VERSION}/libbink-${VERSION}-x86_64-apple-darwin.tar.gz

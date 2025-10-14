@@ -136,6 +136,40 @@ class Story:
             LIB.bink_cstring_free(err_msg)
             raise RuntimeError(err)
 
+    def save_state(self) -> str:
+        """Saves the current state of the story and returns it as a string.
+        The returned state can be loaded later using load_state()."""
+        err_msg = ctypes.c_char_p()
+        save_string = ctypes.c_char_p()
+        ret = LIB.bink_story_save_state(
+            self._story,
+            ctypes.byref(save_string),
+            ctypes.byref(err_msg))
+
+        if ret != BINK_OK:
+            err = err_msg.value.decode('utf-8')
+            LIB.bink_cstring_free(err_msg)
+            raise RuntimeError(err)
+
+        result = save_string.value.decode('utf-8')
+        LIB.bink_cstring_free(save_string)
+
+        return result
+
+    def load_state(self, save_state: str):
+        """Loads a previously saved state into the story.
+        This allows resuming the story from a saved point."""
+        err_msg = ctypes.c_char_p()
+        ret = LIB.bink_story_load_state(
+            self._story,
+            save_state.encode('utf-8'),
+            ctypes.byref(err_msg))
+
+        if ret != BINK_OK:
+            err = err_msg.value.decode('utf-8')
+            LIB.bink_cstring_free(err_msg)
+            raise RuntimeError(err)
+
     def __del__(self):
         LIB.bink_story_free(self._story)
 
