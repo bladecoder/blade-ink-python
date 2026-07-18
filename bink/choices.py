@@ -1,63 +1,36 @@
-# pylint: disable=E1101, R0903
-"""Handle Ink Choices."""
+"""Choice collections returned by a story."""
 import ctypes
-from bink import LIB, BINK_OK
 
-
-class ChoicesIterator:
-    """Iterator for choices."""
-    def __init__(self, choices):
-        self._choices = choices
-        self._index = 0
-
-    def __next__(self):
-        if self._index >= len(self._choices):
-            raise StopIteration
-
-        self._index += 1
-        return self._choices[self._index - 1]
+from ._ffi import LIB, call, take_string
+from .tags import Tags
 
 
 class Choices:
-    """List of story choices."""
-    def __init__(self, choices, c_len: int):
-        self._choices = choices
-        self._len = c_len
+    """An owned sequence of choice text, with access to each choice's tags."""
+    def __init__(self, pointer, length):
+        self._choices, self._len = pointer, length
 
-    def __len__(self) -> int:
-        """Returns the number of choices."""
-        return self._len
+    def __len__(self): return self._len
+    def __bool__(self): return bool(self._len)
+    def __iter__(self): return (self[index] for index in range(self._len))
 
-    def __bool__(self) -> bool:
-        return self._len != 0
+    def _index(self, index):
+        if not isinstance(index, int): raise TypeError("choice index must be an integer")
+        if index < 0: index += self._len
+        if not 0 <= index < self._len: raise IndexError("choice index out of range")
+        return index
 
-    def __iter__(self):
-        return ChoicesIterator(self)
+    def __getitem__(self, index):
+        value = ctypes.c_char_p()
+        call("bink_choices_get_text", self._choices, self._index(index), ctypes.byref(value))
+        return take_string(value)
 
-    def __getitem__(self, idx: int) -> str:
-        """Returns the choice text"""
-
-        if not isinstance(idx, int):
-            raise TypeError
-
-        if idx < 0 or idx >= self._len:
-            raise IndexError
-
-        return self.get_text(idx)
-
-    def get_text(self, idx) -> str:
-        """Returns the choice text."""
-        text = ctypes.c_char_p()
-        ret = LIB.bink_choices_get_text(self._choices, idx, ctypes.byref(text))
-
-        if ret != BINK_OK:
-            raise RuntimeError(
-                "Error getting choice text, index out of bounds?")
-
-        result = text.value.decode('utf-8')
-        LIB.bink_cstring_free(text)
-
-        return result
+    def get_tags(self, index):
+        pointer, length = ctypes.c_void_p(), ctypes.c_size_t()
+        call("bink_choices_get_tags", self._choices, self._index(index), ctypes.byref(pointer), ctypes.byref(length))
+        return Tags(pointer, length.value)
 
     def __del__(self):
-        LIB.bink_choices_free(self._choices)
+        if getattr(self, "_choices", None):
+            LIB.bink_choices_free(self._choices)
+            self._choices = None

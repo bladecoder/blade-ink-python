@@ -1,63 +1,27 @@
-# pylint: disable=E1101, R0903
-
-"""Handle Ink tags."""
+"""Tag collections returned by a story or choice."""
 import ctypes
-from bink import LIB, BINK_OK
 
-
-class TagsIterator:
-    """Iterator for tags."""
-    def __init__(self, tags):
-        self._tags = tags
-        self._index = 0
-
-    def __next__(self):
-        if self._index >= len(self._tags):
-            raise StopIteration
-
-        self._index += 1
-        return self._tags[self._index - 1]
+from ._ffi import LIB, call, take_string
 
 
 class Tags:
-    """Contains a list of tags."""
-    def __init__(self, tags, c_len: int):
-        self._tags = tags
-        self._len = c_len
+    """An owned, immutable sequence of Ink tags."""
+    def __init__(self, pointer, length):
+        self._tags, self._len = pointer, length
 
-    def __len__(self) -> int:
-        """Returns the number of tags."""
-        return self._len
+    def __len__(self): return self._len
+    def __bool__(self): return bool(self._len)
+    def __iter__(self): return (self[index] for index in range(self._len))
 
-    def __bool__(self) -> bool:
-        return self._len != 0
-
-    def __iter__(self):
-        return TagsIterator(self)
-
-    def __getitem__(self, idx: int) -> str:
-        """Returns the tag text"""
-
-        if not isinstance(idx, int):
-            raise TypeError
-
-        if idx < 0 or idx >= self._len:
-            raise IndexError
-
-        return self.get(idx)
-
-    def get(self, idx) -> str:
-        """Returns the tag text."""
-        tag = ctypes.c_char_p()
-        ret = LIB.bink_tags_get(self._tags, idx, ctypes.byref(tag))
-
-        if ret != BINK_OK:
-            raise RuntimeError("Error getting tag, index out of bounds?")
-
-        result = tag.value.decode('utf-8')
-        LIB.bink_cstring_free(tag)
-
-        return result
+    def __getitem__(self, index):
+        if not isinstance(index, int): raise TypeError("tag index must be an integer")
+        if index < 0: index += self._len
+        if not 0 <= index < self._len: raise IndexError("tag index out of range")
+        value = ctypes.c_char_p()
+        call("bink_tags_get", self._tags, index, ctypes.byref(value))
+        return take_string(value)
 
     def __del__(self):
-        LIB.bink_tags_free(self._tags)
+        if getattr(self, "_tags", None):
+            LIB.bink_tags_free(self._tags)
+            self._tags = None
